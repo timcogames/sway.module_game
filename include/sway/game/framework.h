@@ -26,9 +26,27 @@ public:
 
 	void startup(fsm::IStateBase * state);
 
+	void terminate();
+
+	void run();
+
+	glx11::CanvasRef_t getCanvas();
+
+	ois::InputDeviceManagerRef_t getInputDeviceManager();
+
 private:
+	void _initializeCanvas(const boost::property_tree::ptree & config);
+
+	void _initializeRenderSubsystem();
+
+private:
+	glx11::XScreenConnectionRef_t _connection;
+	glx11::CanvasRef_t _canvas;
+	graphics::RenderSubsystemRef_t _renderSubsystem;
+	ois::InputDeviceManagerRef_t _inputMgr;
 	boost::shared_ptr<fsm::StateManager> _stateMgr;
-	boost::shared_ptr<graphics::RenderSubsystem> _renderSubsystem;
+
+	bool _keepgoing;
 };
 
 NAMESPACE_END(game)

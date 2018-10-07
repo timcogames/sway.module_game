@@ -5,8 +5,8 @@ cmake_minimum_required(VERSION 3.10.2 FATAL_ERROR)
 set(META_PROJECT_NAME module_game)
 set(META_LIB_NAME lib${META_PROJECT_NAME})
 set(META_VERSION_MAJOR 0)
-set(META_VERSION_MINOR 1)
-set(META_VERSION_PATCH 0)
+set(META_VERSION_MINOR 2)
+set(META_VERSION_PATCH 1)
 set(META_VERSION ${META_VERSION_MAJOR}.${META_VERSION_MINOR}.${META_VERSION_PATCH})
 
 # Опции сборки
@@ -43,6 +43,8 @@ include_directories(${MODULE_GAME_DIR}/include)
 include_directories(${MODULE_GAME_DIR}/modules/sway.module_core/include)
 include_directories(${MODULE_GAME_DIR}/modules/sway.module_math/include)
 include_directories(${MODULE_GAME_DIR}/modules/sway.module_graphics/include)
+include_directories(${MODULE_GAME_DIR}/modules/sway.module_platform-glx11/include)
+include_directories(${MODULE_GAME_DIR}/modules/sway.module_ois-x11/include)
 
 # Получаем пути ко всем хедерам и исходникам библиотеки
 file(GLOB_RECURSE MODULE_GAME_HEADERS ${MODULE_GAME_DIR}/include/*.*)
