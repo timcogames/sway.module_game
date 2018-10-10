@@ -32,8 +32,10 @@ public:
 
 	glx11::CanvasRef_t getCanvas();
 
-	ois::InputDeviceManagerRef_t getInputDeviceManager();
+	ois::InputDeviceManagerRef_t getInput();
 
+	boost::shared_ptr<fsm::StateManager> getState();
+	
 private:
 	void _initializeCanvas(const boost::property_tree::ptree & config);
 

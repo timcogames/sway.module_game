@@ -31,6 +31,9 @@ void Framework::run() {
 	while (_canvas->eventLoop(_keepgoing)) {
 		_canvas->getContext()->makeCurrent();
 
+		_stateMgr->frameStarted(0);
+		_stateMgr->frameEnded();
+
 		_canvas->getContext()->present();
 		_canvas->getContext()->doneCurrent();
 	}
@@ -69,8 +72,12 @@ glx11::CanvasRef_t Framework::getCanvas() {
 	return _canvas;
 }
 
-ois::InputDeviceManagerRef_t Framework::getInputDeviceManager() {
+ois::InputDeviceManagerRef_t Framework::getInput() {
 	return _inputMgr;
+}
+
+boost::shared_ptr<fsm::StateManager> Framework::getState() {
+	return _stateMgr;
 }
 
 NAMESPACE_END(game)
