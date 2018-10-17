@@ -24,7 +24,7 @@ public:
 	 */
 	~Framework();
 
-	void startup(fsm::IStateBase * state);
+	void startup(fsm::AStateBase * state);
 
 	void terminate();
 
@@ -33,8 +33,6 @@ public:
 	glx11::CanvasRef_t getCanvas();
 
 	ois::InputDeviceManagerRef_t getInput();
-
-	boost::shared_ptr<fsm::StateManager> getState();
 	
 private:
 	void _initializeCanvas(const boost::property_tree::ptree & config);
@@ -45,6 +43,7 @@ private:
 	glx11::XScreenConnectionRef_t _connection;
 	glx11::CanvasRef_t _canvas;
 	graphics::RenderSubsystemRef_t _renderSubsystem;
+	graphics::RenderQueueRef_t _renderQueue;
 	ois::InputDeviceManagerRef_t _inputMgr;
 	boost::shared_ptr<fsm::StateManager> _stateMgr;
 

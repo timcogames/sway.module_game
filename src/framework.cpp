@@ -19,7 +19,7 @@ Framework::~Framework() {
 	// Empty
 }
 
-void Framework::startup(fsm::IStateBase * state) {
+void Framework::startup(fsm::AStateBase * state) {
 	_stateMgr->changeState(state, this);
 }
 
@@ -32,6 +32,7 @@ void Framework::run() {
 		_canvas->getContext()->makeCurrent();
 
 		_stateMgr->frameStarted(0);
+		_renderSubsystem->render();
 		_stateMgr->frameEnded();
 
 		_canvas->getContext()->present();
@@ -65,6 +66,10 @@ void Framework::_initializeRenderSubsystem() {
 		% desc.version.getMajor() % desc.version.getMinor() % desc.version.getPatch());
 
 	_renderSubsystem = boost::make_shared<graphics::RenderSubsystem>(desc, this);
+	_renderQueue = _renderSubsystem->createQueue();
+	_renderQueue->setPriority(core::intrusive::kPriority_Normal);
+	_renderQueue->addSubqueue(boost::make_shared<graphics::RenderSubqueue>(graphics::RenderSubqueueGroup_t::kOpaque));
+
 	this->registerObject(_renderSubsystem.get());
 }
 
@@ -74,10 +79,6 @@ glx11::CanvasRef_t Framework::getCanvas() {
 
 ois::InputDeviceManagerRef_t Framework::getInput() {
 	return _inputMgr;
-}
-
-boost::shared_ptr<fsm::StateManager> Framework::getState() {
-	return _stateMgr;
 }
 
 NAMESPACE_END(game)

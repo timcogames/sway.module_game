@@ -23,7 +23,7 @@ void StateManager::frameEnded() {
 	_stateStack.back()->frameEnded();
 }
 
-void StateManager::changeState(IStateBase * state, core::foundation::Context * context) {
+void StateManager::changeState(AStateBase * state, core::foundation::Context * context) {
 	while (!_stateStack.empty()) {
 		_stateStack.back()->exit();
 		_stateStack.pop_back();
@@ -34,7 +34,7 @@ void StateManager::changeState(IStateBase * state, core::foundation::Context * c
 	_stateStack.back()->enter();
 }
 
-void StateManager::pushState(IStateBase * state, core::foundation::Context * context) {
+void StateManager::pushState(AStateBase * state, core::foundation::Context * context) {
 	if (!_stateStack.empty())
 		_stateStack.back()->pause();
 

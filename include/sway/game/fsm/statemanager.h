@@ -36,14 +36,24 @@ public:
 	 */
 	void frameEnded();
 
-	void changeState(IStateBase * state, core::foundation::Context * context);
+	/*!
+	 * \brief
+	 *    Изменяет текущее состояние на новое.
+	 * 
+	 * \param[in] state
+	 *    Указатель на новое состояние.
+	 * 
+	 * \param[in] context
+	 *    Указатель на контекст.
+	 */
+	void changeState(AStateBase * state, core::foundation::Context * context);
 
-	void pushState(IStateBase * state, core::foundation::Context * context);
+	void pushState(AStateBase * state, core::foundation::Context * context);
 
 	void popState();
 
 private:
-	std::vector<IStateBase *> _stateStack;
+	std::vector<AStateBase *> _stateStack;
 };
 
 NAMESPACE_END(fsm)

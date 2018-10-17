@@ -7,26 +7,30 @@ NAMESPACE_BEGIN(sway)
 NAMESPACE_BEGIN(game)
 NAMESPACE_BEGIN(fsm)
 
-class IStateBase {
+class AStateBase {
 public:
 	/*!
 	 * \brief
 	 *    Конструктор класса.
 	 */
-	IStateBase() {
-		// Empty
-	}
+	AStateBase() = default;
 
 	/*!
 	 * \brief
 	 *    Деструктор класса.
 	 */
-	virtual ~IStateBase() {
-		// Empty
-	}
+	virtual ~AStateBase() = default;
 
+	/*!
+	 * \brief
+	 *    Выполняться при входе в состояние.
+	 */
 	virtual void enter() = 0;
 
+	/*!
+	 * \brief
+	 *    Выполняться при выходе из состояния.
+	 */
 	virtual void exit() = 0;
 
 	virtual void pause() = 0;
@@ -37,6 +41,13 @@ public:
 
 	virtual void frameEnded() = 0;
 
+	/*!
+	 * \brief
+	 *    Устанавливает контекст.
+	 * 
+	 * \param[in] context
+	 *    Указатель на контекст.
+	 */
 	void setContext(core::foundation::Context * context) {
 		_context = context;
 	}
@@ -45,8 +56,17 @@ public:
 		return _context;
 	}
 
+	/*!
+	 * \brief
+	 *    Получает подсистему.
+	 */
+	template<class OBJ>
+	OBJ * getSubsystem() const {
+		return static_cast<OBJ *>(_context->getObject(OBJ::getObjectMetadata()->getClassName()));
+	}
+
 private:
-	core::foundation::Context * _context;
+	core::foundation::Context * _context; /*!< Контекст. */
 };
 
 NAMESPACE_END(fsm)
