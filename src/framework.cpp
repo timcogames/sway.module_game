@@ -8,8 +8,8 @@ Framework::Framework()
 	: _keepgoing(true) {
 	auto settings = std::make_shared<Settings>();
 
-	_initializeCanvas(settings->getChild("window"));
-	_initializeRenderSubsystem();
+	_initializeCanvas(settings->getChild("Window"));
+	_initializeRenderSubsystem(settings->getChild("Gapi"));
 
 	_inputMgr = std::make_shared<ois::InputDeviceManager>(_connection->getDisplay(), _canvas->getWindowHandle());
 	_stateMgr = std::make_shared<fsm::StateManager>();
@@ -43,10 +43,10 @@ void Framework::run() {
 void Framework::_initializeCanvas(const boost::property_tree::ptree & config) {
 	glx11::WindowInitialInfo windowInfo;
 	windowInfo.title = "seeker";
-	windowInfo.size.normal = math::size2i_t(config.get<int>("width"), config.get<int>("height"));
-	windowInfo.size.min = math::size2i_t(config.get<int>("min_width", 640), config.get<int>("min_height", 480));
-	windowInfo.size.max = math::size2i_t(config.get<int>("max_width", 1024), config.get<int>("max_height", 768));
-	windowInfo.fullscreen = config.get<bool>("fullscreen");
+	windowInfo.size.normal = math::size2i_t(config.get<int>("Width"), config.get<int>("Height"));
+	windowInfo.size.min = math::size2i_t(config.get<int>("MinWidth", 640), config.get<int>("MinHeight", 480));
+	windowInfo.size.max = math::size2i_t(config.get<int>("MaxWidth", 1024), config.get<int>("MaxHeight", 768));
+	windowInfo.fullscreen = config.get<bool>("Fullscreen");
 	windowInfo.resizable = true;
 
 	_connection = std::make_shared<glx11::XScreenConnection>();
@@ -56,16 +56,11 @@ void Framework::_initializeCanvas(const boost::property_tree::ptree & config) {
 	_canvas->getContext()->makeCurrent();
 }
 
-void Framework::_initializeRenderSubsystem() {
-	char path[PATH_MAX + 1];
-	strncpy(path, "/home/bonus85/Projects/game.seeker/bin", PATH_MAX);
+void Framework::_initializeRenderSubsystem(const boost::property_tree::ptree & config) {
+	auto plugname = core::misc::format("%s.%s",
+		config.get<std::string>("Name").c_str(), config.get<std::string>("Version").c_str());
 
-	graphics::PluginDescriptor desc;
-	desc.version = core::Version(0, 13, 32);
-	desc.fullname = boost::str(boost::format("%s/module_gapi_gl.so.%d.%d.%d") % path
-		% desc.version.getMajor() % desc.version.getMinor() % desc.version.getPatch());
-
-	_renderSubsystem = std::make_shared<graphics::RenderSubsystem>(desc, this);
+	_renderSubsystem = std::make_shared<graphics::RenderSubsystem>(plugname, this);
 	_renderQueue = _renderSubsystem->createQueue();
 	_renderQueue->setPriority(core::intrusive::kPriority_Normal);
 	_renderQueue->addSubqueue(std::make_shared<graphics::RenderSubqueue>(graphics::RenderSubqueueGroup_t::kOpaque));

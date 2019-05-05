@@ -37,7 +37,7 @@ public:
 private:
 	void _initializeCanvas(const boost::property_tree::ptree & config);
 
-	void _initializeRenderSubsystem();
+	void _initializeRenderSubsystem(const boost::property_tree::ptree & config);
 
 private:
 	glx11::XScreenConnectionRef_t _connection;
