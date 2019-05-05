@@ -45,7 +45,7 @@ private:
 	graphics::RenderSubsystemRef_t _renderSubsystem;
 	graphics::RenderQueueRef_t _renderQueue;
 	ois::InputDeviceManagerRef_t _inputMgr;
-	boost::shared_ptr<fsm::StateManager> _stateMgr;
+	std::shared_ptr<fsm::StateManager> _stateMgr;
 
 	bool _keepgoing;
 };

@@ -5,8 +5,8 @@ cmake_minimum_required(VERSION 3.10.2 FATAL_ERROR)
 set(META_PROJECT_NAME module_game)
 set(META_LIB_NAME lib${META_PROJECT_NAME})
 set(META_VERSION_MAJOR 0)
-set(META_VERSION_MINOR 3)
-set(META_VERSION_PATCH 5)
+set(META_VERSION_MINOR 4)
+set(META_VERSION_PATCH 6)
 set(META_VERSION ${META_VERSION_MAJOR}.${META_VERSION_MINOR}.${META_VERSION_PATCH})
 
 # Опции сборки
@@ -51,15 +51,19 @@ file(GLOB_RECURSE MODULE_GAME_HEADERS ${MODULE_GAME_DIR}/include/*.*)
 file(GLOB_RECURSE MODULE_GAME_SOURCE ${MODULE_GAME_DIR}/src/*.*)
 
 set(Boost_USE_STATIC_LIBS ON)
-set(BOOST_COMPONENTS system filesystem thread)
-find_package(Boost 1.58 REQUIRED COMPONENTS ${BOOST_COMPONENTS})
-if(NOT Boost_FOUND)
-	message(FATAL_ERROR "Fatal error: Boost (version >= 1.58) required.")
-else()
-	message(STATUS "Boost includes: ${Boost_INCLUDE_DIRS}")
-	message(STATUS "Boost libs: ${Boost_LIBRARIES}")
+set(Boost_NO_SYSTEM_PATHS TRUE)
+set(BOOST_COMPONENTS system filesystem)
+set(BOOST_INCLUDEDIR "${BOOST_ROOT}/")
+set(BOOST_LIBRARYDIR "${BOOST_ROOT}/lib")
 
-	include_directories(${Boost_INCLUDE_DIRS})
+find_package(Boost 1.69.0 REQUIRED COMPONENTS ${BOOST_COMPONENTS})
+if(NOT Boost_FOUND)
+	message(FATAL_ERROR "Fatal error: Boost (version >= 1.69.0) required.")
+else()
+	message(STATUS "Boost includes: ${BOOST_INCLUDEDIR}")
+	message(STATUS "Boost libs: ${BOOST_LIBRARYDIR}")
+
+	include_directories(${BOOST_INCLUDEDIR})
 endif()
 
 if(BUILD_SHARED)
@@ -76,7 +80,7 @@ else()
 	set_target_properties(${META_LIB_NAME} PROPERTIES SUFFIX ".a.${META_VERSION}")
 endif()
 
-target_link_libraries(${META_LIB_NAME} GL X11 Boost::system Boost::filesystem Boost::thread)
+target_link_libraries(${META_LIB_NAME} GL X11 ${BOOST_LIBRARIES})
 
 # Добавляем построение тестов
 if(ENABLE_TESTS)

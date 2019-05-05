@@ -6,13 +6,13 @@ NAMESPACE_BEGIN(game)
 
 Framework::Framework()
 	: _keepgoing(true) {
-	auto settings = boost::make_shared<Settings>();
+	auto settings = std::make_shared<Settings>();
 
 	_initializeCanvas(settings->getChild("window"));
 	_initializeRenderSubsystem();
 
-	_inputMgr = boost::make_shared<ois::InputDeviceManager>(_connection->getDisplay(), _canvas->getWindowHandle());
-	_stateMgr = boost::make_shared<fsm::StateManager>();
+	_inputMgr = std::make_shared<ois::InputDeviceManager>(_connection->getDisplay(), _canvas->getWindowHandle());
+	_stateMgr = std::make_shared<fsm::StateManager>();
 }
 
 Framework::~Framework() {
@@ -49,8 +49,8 @@ void Framework::_initializeCanvas(const boost::property_tree::ptree & config) {
 	windowInfo.fullscreen = config.get<bool>("fullscreen");
 	windowInfo.resizable = true;
 
-	_connection = boost::make_shared<glx11::XScreenConnection>();
-	_canvas = boost::make_shared<glx11::Canvas>(_connection, windowInfo);
+	_connection = std::make_shared<glx11::XScreenConnection>();
+	_canvas = std::make_shared<glx11::Canvas>(_connection, windowInfo);
 
 	_canvas->show();
 	_canvas->getContext()->makeCurrent();
@@ -65,10 +65,10 @@ void Framework::_initializeRenderSubsystem() {
 	desc.fullname = boost::str(boost::format("%s/module_gapi_gl.so.%d.%d.%d") % path
 		% desc.version.getMajor() % desc.version.getMinor() % desc.version.getPatch());
 
-	_renderSubsystem = boost::make_shared<graphics::RenderSubsystem>(desc, this);
+	_renderSubsystem = std::make_shared<graphics::RenderSubsystem>(desc, this);
 	_renderQueue = _renderSubsystem->createQueue();
 	_renderQueue->setPriority(core::intrusive::kPriority_Normal);
-	_renderQueue->addSubqueue(boost::make_shared<graphics::RenderSubqueue>(graphics::RenderSubqueueGroup_t::kOpaque));
+	_renderQueue->addSubqueue(std::make_shared<graphics::RenderSubqueue>(graphics::RenderSubqueueGroup_t::kOpaque));
 
 	this->registerObject(_renderSubsystem.get());
 }
