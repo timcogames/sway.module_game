@@ -10,47 +10,47 @@ NAMESPACE_BEGIN(game)
 
 class Framework : public core::foundation::Context {
 public:
-	/*!
-	 * \brief
-	 *    Конструктор класса.
-	 *
-	 *    Выполняет инициализацию нового экземпляра класса.
-	 */
-	Framework();
+  /*!
+   * \brief
+   *    Конструктор класса.
+   *
+   *    Выполняет инициализацию нового экземпляра класса.
+   */
+  Framework();
 
-	/*!
-	 * \brief
-	 *    Деструктор класса.
-	 */
-	~Framework();
+  /*!
+   * \brief
+   *    Деструктор класса.
+   */
+  ~Framework();
 
-	void startup(fsm::AStateBase * state);
+  void startup(fsm::AStateBase *state);
 
-	void terminate();
+  void terminate();
 
-	void run();
+  void run();
 
-	glx11::CanvasRef_t getCanvas();
+  glx11::CanvasRef_t getCanvas();
 
-	ois::InputDeviceManagerRef_t getInput();
-	
-private:
-	void _initializeCanvas(const boost::property_tree::ptree & config);
-
-	void _initializeRenderSubsystem(const boost::property_tree::ptree & config);
+  ois::InputDeviceManagerRef_t getInput();
 
 private:
-	glx11::XScreenConnectionRef_t _connection;
-	glx11::CanvasRef_t _canvas;
-	graphics::RenderSubsystemRef_t _renderSubsystem;
-	graphics::RenderQueueRef_t _renderQueue;
-	ois::InputDeviceManagerRef_t _inputMgr;
-	std::shared_ptr<fsm::StateManager> _stateMgr;
+  void initializeCanvas_(const boost::property_tree::ptree &config);
 
-	bool _keepgoing;
+  void initializeRenderSubsystem_(const boost::property_tree::ptree &config);
+
+private:
+  glx11::XScreenConnectionRef_t _connection;
+  glx11::CanvasRef_t canvas_;
+  graphics::RenderSubsystemRef_t renderSubsystem_;
+  graphics::RenderQueueRef_t renderQueue_;
+  ois::InputDeviceManagerRef_t inputMgr_;
+  std::shared_ptr<fsm::StateManager> stateMgr_;
+
+  bool _keepgoing;
 };
 
 NAMESPACE_END(game)
 NAMESPACE_END(sway)
 
-#endif // SWAY_GAME_FRAMEWORK_H
+#endif  // SWAY_GAME_FRAMEWORK_H

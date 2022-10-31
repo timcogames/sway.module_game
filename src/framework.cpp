@@ -5,76 +5,68 @@ NAMESPACE_BEGIN(sway)
 NAMESPACE_BEGIN(game)
 
 Framework::Framework()
-	: _keepgoing(true) {
-	auto settings = std::make_shared<Settings>();
+    : _keepgoing(true) {
+  auto settings = std::make_shared<Settings>();
 
-	_initializeCanvas(settings->getChild("Window"));
-	_initializeRenderSubsystem(settings->getChild("Gapi"));
+  initializeCanvas_(settings->getChild("Window"));
+  initializeRenderSubsystem_(settings->getChild("Gapi"));
 
-	_inputMgr = std::make_shared<ois::InputDeviceManager>(_connection->getDisplay(), _canvas->getWindowHandle());
-	_stateMgr = std::make_shared<fsm::StateManager>();
+  inputMgr_ = std::make_shared<ois::InputDeviceManager>(_connection->getDisplay(), canvas_->getWindowHandle());
+  stateMgr_ = std::make_shared<fsm::StateManager>();
 }
 
 Framework::~Framework() {
-	// Empty
+  // Empty
 }
 
-void Framework::startup(fsm::AStateBase * state) {
-	_stateMgr->changeState(state, this);
-}
+void Framework::startup(fsm::AStateBase *state) { stateMgr_->changeState(state, this); }
 
-void Framework::terminate() {
-	_keepgoing = false;
-}
+void Framework::terminate() { _keepgoing = false; }
 
 void Framework::run() {
-	while (_canvas->eventLoop(_keepgoing)) {
-		_canvas->getContext()->makeCurrent();
+  while (canvas_->eventLoop(_keepgoing)) {
+    canvas_->getContext()->makeCurrent();
 
-		_stateMgr->frameStarted(0);
-		_renderSubsystem->render();
-		_stateMgr->frameEnded();
+    stateMgr_->frameStarted(0);
+    renderSubsystem_->render();
+    stateMgr_->frameEnded();
 
-		_canvas->getContext()->present();
-		_canvas->getContext()->doneCurrent();
-	}
+    canvas_->getContext()->present();
+    canvas_->getContext()->doneCurrent();
+  }
 }
 
-void Framework::_initializeCanvas(const boost::property_tree::ptree & config) {
-	glx11::WindowInitialInfo windowInfo;
-	windowInfo.title = "seeker";
-	windowInfo.size.normal = math::size2i_t(config.get<int>("Width"), config.get<int>("Height"));
-	windowInfo.size.min = math::size2i_t(config.get<int>("MinWidth", 640), config.get<int>("MinHeight", 480));
-	windowInfo.size.max = math::size2i_t(config.get<int>("MaxWidth", 1024), config.get<int>("MaxHeight", 768));
-	windowInfo.fullscreen = config.get<bool>("Fullscreen");
-	windowInfo.resizable = true;
+void Framework::initializeCanvas_(const boost::property_tree::ptree &config) {
+  glx11::WindowInitialInfo windowInfo;
+  windowInfo.title = "seeker";
+  windowInfo.size.normal = math::size2i_t(config.get<int>("Width"), config.get<int>("Height"));
+  windowInfo.size.min = math::size2i_t(config.get<int>("MinWidth", 640), config.get<int>("MinHeight", 480));
+  windowInfo.size.max = math::size2i_t(config.get<int>("MaxWidth", 1024), config.get<int>("MaxHeight", 768));
+  windowInfo.fullscreen = config.get<bool>("Fullscreen");
+  windowInfo.resizable = true;
 
-	_connection = std::make_shared<glx11::XScreenConnection>();
-	_canvas = std::make_shared<glx11::Canvas>(_connection, windowInfo);
+  _connection = std::make_shared<glx11::XScreenConnection>();
+  canvas_ = std::make_shared<glx11::Canvas>(_connection, windowInfo);
 
-	_canvas->show();
-	_canvas->getContext()->makeCurrent();
+  canvas_->show();
+  canvas_->getContext()->makeCurrent();
 }
 
-void Framework::_initializeRenderSubsystem(const boost::property_tree::ptree & config) {
-	auto plugname = core::misc::format("%s.%s",
-		config.get<std::string>("Name").c_str(), config.get<std::string>("Version").c_str());
+void Framework::initializeRenderSubsystem_(const boost::property_tree::ptree &config) {
+  auto plugname =
+      core::misc::format("%s.%s", config.get<std::string>("Name").c_str(), config.get<std::string>("Version").c_str());
 
-	_renderSubsystem = std::make_shared<graphics::RenderSubsystem>(plugname, this);
-	_renderQueue = _renderSubsystem->createQueue();
-	_renderQueue->setPriority(core::intrusive::kPriority_Normal);
-	_renderQueue->addSubqueue(std::make_shared<graphics::RenderSubqueue>(graphics::RenderSubqueueGroup_t::kOpaque));
+  renderSubsystem_ = std::make_shared<graphics::RenderSubsystem>(plugname, this);
+  renderQueue_ = renderSubsystem_->createQueue();
+  renderQueue_->setPriority(core::intrusive::kPriority_Normal);
+  renderQueue_->addSubqueue(std::make_shared<graphics::RenderSubqueue>(graphics::RenderSubqueueGroup_t::kOpaque));
 
-	this->registerObject(_renderSubsystem.get());
+  this->registerObject(renderSubsystem_.get());
 }
 
-glx11::CanvasRef_t Framework::getCanvas() {
-	return _canvas;
-}
+glx11::CanvasRef_t Framework::getCanvas() { return canvas_; }
 
-ois::InputDeviceManagerRef_t Framework::getInput() {
-	return _inputMgr;
-}
+ois::InputDeviceManagerRef_t Framework::getInput() { return inputMgr_; }
 
 NAMESPACE_END(game)
 NAMESPACE_END(sway)

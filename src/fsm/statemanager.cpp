@@ -5,52 +5,50 @@ NAMESPACE_BEGIN(game)
 NAMESPACE_BEGIN(fsm)
 
 StateManager::StateManager() {
-	// Empty
+  // Empty
 }
 
 StateManager::~StateManager() {
-	while (!_stateStack.empty()) {
-		_stateStack.back()->exit();
-		_stateStack.pop_back();
-	}
+  while (!stateStack_.empty()) {
+    stateStack_.back()->exit();
+    stateStack_.pop_back();
+  }
 }
 
-void StateManager::frameStarted(float timeStep) {
-	_stateStack.back()->frameStarted(timeStep);
+void StateManager::frameStarted(float timeStep) { stateStack_.back()->frameStarted(timeStep); }
+
+void StateManager::frameEnded() { stateStack_.back()->frameEnded(); }
+
+void StateManager::changeState(AStateBase *state, core::foundation::Context *context) {
+  while (!stateStack_.empty()) {
+    stateStack_.back()->exit();
+    stateStack_.pop_back();
+  }
+
+  stateStack_.push_back(state);
+  stateStack_.back()->setContext(context);
+  stateStack_.back()->enter();
 }
 
-void StateManager::frameEnded() {
-	_stateStack.back()->frameEnded();
-}
+void StateManager::pushState(AStateBase *state, core::foundation::Context *context) {
+  if (!stateStack_.empty()) {
+    stateStack_.back()->pause();
+  }
 
-void StateManager::changeState(AStateBase * state, core::foundation::Context * context) {
-	while (!_stateStack.empty()) {
-		_stateStack.back()->exit();
-		_stateStack.pop_back();
-	}
-
-	_stateStack.push_back(state);
-	_stateStack.back()->setContext(context);
-	_stateStack.back()->enter();
-}
-
-void StateManager::pushState(AStateBase * state, core::foundation::Context * context) {
-	if (!_stateStack.empty())
-		_stateStack.back()->pause();
-
-	_stateStack.push_back(state);
-	_stateStack.back()->setContext(context);
-	_stateStack.back()->enter();
+  stateStack_.push_back(state);
+  stateStack_.back()->setContext(context);
+  stateStack_.back()->enter();
 }
 
 void StateManager::popState() {
-	while (!_stateStack.empty()) {
-		_stateStack.back()->exit();
-		_stateStack.pop_back();
-	}
+  while (!stateStack_.empty()) {
+    stateStack_.back()->exit();
+    stateStack_.pop_back();
+  }
 
-	if (!_stateStack.empty())
-		_stateStack.back()->resume();
+  if (!stateStack_.empty()) {
+    stateStack_.back()->resume();
+  }
 }
 
 NAMESPACE_END(fsm)

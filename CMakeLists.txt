@@ -14,7 +14,7 @@ option(BUILD_SHARED "Build shared library" OFF)
 option(ENABLE_COVERAGE "Enable coverage builds" OFF)
 option(ENABLE_TESTS "Enable test builds" OFF)
 
-project(${META_PROJECT_NAME} C CXX)
+project(${META_PROJECT_NAME) CXX)
 
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)

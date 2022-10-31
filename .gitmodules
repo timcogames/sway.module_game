@@ -7,3 +7,9 @@
 [submodule "submodules/sway.module_graphics"]
 	path = submodules/sway.module_graphics
 	url = https://github.com/timcogames/sway.module_graphics.git
+[submodule "submodules/sway.module_platform-glx11"]
+	path = submodules/sway.module_platform-glx11
+	url = https://github.com/timcogames/sway.module_platform-glx11.git
+[submodule "submodules/sway.module_ois-x11"]
+	path = submodules/sway.module_ois-x11
+	url = https://github.com/timcogames/sway.module_ois-x11.git
