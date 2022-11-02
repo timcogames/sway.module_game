@@ -1,4 +1,4 @@
-#include <sway/game/fsm/statemanager.h>
+#include <sway/game/fsm/statemanager.hpp>
 
 NAMESPACE_BEGIN(sway)
 NAMESPACE_BEGIN(game)

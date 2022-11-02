@@ -1,9 +1,9 @@
-#ifndef SWAY_GAME_FRAMEWORK_H
-#define SWAY_GAME_FRAMEWORK_H
+#ifndef SWAY_GAME_FRAMEWORK_HPP
+#define SWAY_GAME_FRAMEWORK_HPP
 
-#include <sway/game/fsm/statebase.h>
-#include <sway/game/fsm/statemanager.h>
-#include <sway/game/prereqs.h>
+#include <sway/game/fsm/statebase.hpp>
+#include <sway/game/fsm/statemanager.hpp>
+#include <sway/game/prereqs.hpp>
 
 NAMESPACE_BEGIN(sway)
 NAMESPACE_BEGIN(game)
@@ -35,12 +35,12 @@ public:
   ois::InputDeviceManagerRef_t getInput();
 
 private:
-  void initializeCanvas_(const boost::property_tree::ptree &config);
+  void initializeCanvas_(/*const boost::property_tree::ptree &config*/);
 
-  void initializeRenderSubsystem_(const boost::property_tree::ptree &config);
+  void initializeRenderSubsystem_(/*const boost::property_tree::ptree &config*/);
 
 private:
-  glx11::XScreenConnectionRef_t _connection;
+  glx11::XScreenConnectionRef_t connection_;
   glx11::CanvasRef_t canvas_;
   graphics::RenderSubsystemRef_t renderSubsystem_;
   graphics::RenderQueueRef_t renderQueue_;
@@ -53,4 +53,4 @@ private:
 NAMESPACE_END(game)
 NAMESPACE_END(sway)
 
-#endif  // SWAY_GAME_FRAMEWORK_H
+#endif  // SWAY_GAME_FRAMEWORK_HPP

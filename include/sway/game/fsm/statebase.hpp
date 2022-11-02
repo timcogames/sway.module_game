@@ -1,7 +1,7 @@
-#ifndef SWAY_GAME_FSM_STATEBASE_H
-#define SWAY_GAME_FSM_STATEBASE_H
+#ifndef SWAY_GAME_FSM_STATEBASE_HPP
+#define SWAY_GAME_FSM_STATEBASE_HPP
 
-#include <sway/game/prereqs.h>
+#include <sway/game/prereqs.hpp>
 
 NAMESPACE_BEGIN(sway)
 NAMESPACE_BEGIN(game)
