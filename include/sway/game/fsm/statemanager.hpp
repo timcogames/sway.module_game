@@ -46,9 +46,9 @@ public:
    * \param[in] context
    *    Указатель на контекст.
    */
-  void changeState(AStateBase *state, core::foundation::Context *context);
+  void changeState(AStateBase *state, Subsystem *context);
 
-  void pushState(AStateBase *state, core::foundation::Context *context);
+  void pushState(AStateBase *state, Subsystem *context);
 
   void popState();
 

@@ -1,6 +1,8 @@
 #ifndef SWAY_GAME_FRAMEWORK_HPP
 #define SWAY_GAME_FRAMEWORK_HPP
 
+#include "subsystem.hpp"
+
 #include <sway/game/fsm/statebase.hpp>
 #include <sway/game/fsm/statemanager.hpp>
 #include <sway/game/prereqs.hpp>
@@ -8,7 +10,7 @@
 NAMESPACE_BEGIN(sway)
 NAMESPACE_BEGIN(game)
 
-class Framework : public core::foundation::Context {
+class Framework : public Subsystem {
 public:
   /*!
    * \brief
@@ -22,7 +24,7 @@ public:
    * \brief
    *    Деструктор класса.
    */
-  ~Framework();
+  ~Framework() = default;
 
   void startup(fsm::AStateBase *state);
 
@@ -47,7 +49,7 @@ private:
   ois::InputDeviceManagerRef_t inputMgr_;
   std::shared_ptr<fsm::StateManager> stateMgr_;
 
-  bool _keepgoing;
+  bool keepgoing_;
 };
 
 NAMESPACE_END(game)

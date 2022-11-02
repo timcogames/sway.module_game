@@ -1,7 +1,10 @@
 #ifndef SWAY_GAME_FSM_STATEBASE_HPP
 #define SWAY_GAME_FSM_STATEBASE_HPP
 
+#include "../subsystem.hpp"
+
 #include <sway/game/prereqs.hpp>
+#include <sway/keywords.hpp>
 
 NAMESPACE_BEGIN(sway)
 NAMESPACE_BEGIN(game)
@@ -25,21 +28,21 @@ public:
    * \brief
    *    Выполняться при входе в состояние.
    */
-  virtual void enter() = 0;
+  PURE_VIRTUAL(void enter());
 
   /*!
    * \brief
    *    Выполняться при выходе из состояния.
    */
-  virtual void exit() = 0;
+  PURE_VIRTUAL(void exit());
 
-  virtual void pause() = 0;
+  PURE_VIRTUAL(void pause());
 
-  virtual void resume() = 0;
+  PURE_VIRTUAL(void resume());
 
-  virtual void frameStarted(float timeStep) = 0;
+  PURE_VIRTUAL(void frameStarted(float timeStep));
 
-  virtual void frameEnded() = 0;
+  PURE_VIRTUAL(void frameEnded());
 
   /*!
    * \brief
@@ -48,9 +51,9 @@ public:
    * \param[in] context
    *    Указатель на контекст.
    */
-  void setContext(core::foundation::Context *context) { context_ = context; }
+  void setContext(Subsystem *context) { context_ = context; }
 
-  core::foundation::Context *getContext() { return context_; }
+  Subsystem *getContext() { return context_; }
 
   /*!
    * \brief
@@ -62,11 +65,11 @@ public:
   }
 
 private:
-  core::foundation::Context *context_; /*!< Контекст. */
+  Subsystem *context_; /*!< Контекст. */
 };
 
 NAMESPACE_END(fsm)
 NAMESPACE_END(game)
 NAMESPACE_END(sway)
 
-#endif  // SWAY_GAME_FSM_STATEBASE_H
+#endif  // SWAY_GAME_FSM_STATEBASE_HPP

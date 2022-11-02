@@ -9,9 +9,9 @@
 
 #include <sway/glx11.hpp>
 #include <sway/graphics.hpp>
+#include <sway/ois.hpp>
 
 #include <memory>  // std::shared_ptr, std::make_shared
-#include <sway/ois.h>
 #include <vector>  // std::vector
 
 #endif  // SWAY_GAME_PREREQS_HPP

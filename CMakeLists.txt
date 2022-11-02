@@ -43,40 +43,23 @@ else()
   set(EXECUTABLE_OUTPUT_PATH "${CMAKE_SOURCE_DIR}/bin")
 endif()
 
-set(GLUT_INCLUDE_DIRS "/opt/X11/include")
-set(GLUT_LIBRARY_DIRS "/opt/X11/lib")
+set(SYSTEM_X11_INCLUDE_DIRS "/opt/X11/include")
+set(SYSTEM_X11_LIBRARY_DIRS "/opt/X11/lib")
 set(MODULE_GAME_DIR ${CMAKE_CURRENT_LIST_DIR})
 
 # Добавляем пути для поиска хедеров
-include_directories("${GLUT_INCLUDE_DIRS}")
+include_directories("${SYSTEM_X11_INCLUDE_DIRS}")
 include_directories("${MODULE_GAME_DIR}/include")
 include_directories("${MODULE_GAME_DIR}/submodules/sway.module_core/lib/include")
 include_directories("${MODULE_GAME_DIR}/submodules/sway.module_math/lib/include")
 include_directories("${MODULE_GAME_DIR}/submodules/sway.module_graphics/lib/include")
+include_directories("${MODULE_GAME_DIR}/submodules/sway.module_graphics/submodules/sway.module_gapi/include")
 include_directories("${MODULE_GAME_DIR}/submodules/sway.module_platform-glx11/lib/include")
-include_directories("${MODULE_GAME_DIR}/submodules/sway.module_ois-x11/include")
+include_directories("${MODULE_GAME_DIR}/submodules/sway.module_ois-x11/lib/include")
 
 # Получаем пути ко всем хедерам и исходникам библиотеки
 file(GLOB_RECURSE MODULE_GAME_HEADERS "${MODULE_GAME_DIR}/include/*.*")
 file(GLOB_RECURSE MODULE_GAME_SOURCE "${MODULE_GAME_DIR}/src/*.*")
-
-# set(Boost_USE_STATIC_LIBS ON)
-# set(Boost_NO_BOOST_CMAKE TRUE)
-# set(Boost_NO_SYSTEM_PATHS TRUE)
-# set(BOOST_ROOT ${CUSTOM_BOOST_ROOT_DIR})
-# set(BOOST_INCLUDEDIR "${BOOST_ROOT}/")
-# set(BOOST_LIBRARYDIR "${BOOST_ROOT}/libs")
-# set(BOOST_COMPONENTS system filesystem)
-
-# find_package(Boost 1.78.0 REQUIRED COMPONENTS ${BOOST_COMPONENTS})
-# if(NOT Boost_FOUND)
-#   message(FATAL_ERROR "Fatal error: Boost (version >= 1.78.0) required.")
-# else()
-#   message(STATUS "Boost includes: ${BOOST_INCLUDEDIR}")
-#   message(STATUS "Boost libs: ${BOOST_LIBRARYDIR}")
-
-#   include_directories(${BOOST_INCLUDEDIR})
-# endif()
 
 if(MODULE_GAME_SHARED_LIB)
   # Добавляем в проект цель для сборки динамической библиотеки
@@ -93,7 +76,6 @@ else()
 endif()
 
 custom_enable_cxx17(${META_GAME_LIBNAME})
-# target_link_libraries(${META_GAME_LIBNAME} GL X11 ${BOOST_LIBRARIES})
 target_link_libraries(${META_GAME_LIBNAME} GL X11)
 
 # Добавляем построение тестов

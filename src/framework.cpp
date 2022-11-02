@@ -5,7 +5,7 @@ NAMESPACE_BEGIN(sway)
 NAMESPACE_BEGIN(game)
 
 Framework::Framework()
-    : _keepgoing(true) {
+    : keepgoing_(true) {
   // auto settings = std::make_shared<Settings>();
 
   initializeCanvas_(/*settings->getChild("Window")*/);
@@ -15,16 +15,12 @@ Framework::Framework()
   stateMgr_ = std::make_shared<fsm::StateManager>();
 }
 
-Framework::~Framework() {
-  // Empty
-}
-
 void Framework::startup(fsm::AStateBase *state) { stateMgr_->changeState(state, this); }
 
-void Framework::terminate() { _keepgoing = false; }
+void Framework::terminate() { keepgoing_ = false; }
 
 void Framework::run() {
-  while (canvas_->eventLoop(_keepgoing)) {
+  while (canvas_->eventLoop(keepgoing_)) {
     canvas_->getContext()->makeCurrent();
 
     stateMgr_->frameStarted(0);
@@ -66,7 +62,7 @@ void Framework::initializeRenderSubsystem_(/*const boost::property_tree::ptree &
   renderQueue_->setPriority(core::intrusive::kPriority_Normal);
   renderQueue_->addSubqueue(std::make_shared<graphics::RenderSubqueue>(graphics::RenderSubqueueGroup_t::kOpaque));
 
-  this->registerObject(renderSubsystem_.get());
+  registerObject(renderSubsystem_.get());
 }
 
 glx11::CanvasRef_t Framework::getCanvas() { return canvas_; }
