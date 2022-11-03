@@ -1,8 +1,6 @@
 #ifndef SWAY_GAME_FSM_STATEBASE_HPP
 #define SWAY_GAME_FSM_STATEBASE_HPP
 
-#include "../subsystem.hpp"
-
 #include <sway/game/prereqs.hpp>
 #include <sway/keywords.hpp>
 
@@ -12,27 +10,27 @@ NAMESPACE_BEGIN(fsm)
 
 class AStateBase {
 public:
-  /*!
-   * \brief
-   *    Конструктор класса.
+  /**
+   * @brief Конструктор класса.
+   *
    */
   AStateBase() = default;
 
-  /*!
-   * \brief
-   *    Деструктор класса.
+  /**
+   * @brief Деструктор класса.
+   *
    */
   virtual ~AStateBase() = default;
 
-  /*!
-   * \brief
-   *    Выполняться при входе в состояние.
+  /**
+   * @brief Выполняться при входе в состояние.
+   *
    */
   PURE_VIRTUAL(void enter());
 
-  /*!
-   * \brief
-   *    Выполняться при выходе из состояния.
+  /**
+   * @brief Выполняться при выходе из состояния.
+   *
    */
   PURE_VIRTUAL(void exit());
 
@@ -40,32 +38,31 @@ public:
 
   PURE_VIRTUAL(void resume());
 
-  PURE_VIRTUAL(void frameStarted(float timeStep));
+  PURE_VIRTUAL(void frameStarted(float timestep));
 
   PURE_VIRTUAL(void frameEnded());
 
-  /*!
-   * \brief
-   *    Устанавливает контекст.
+  /**
+   * @brief Устанавливает контекст.
    *
-   * \param[in] context
-   *    Указатель на контекст.
+   * @param[in] context Указатель на контекст.
+   *
    */
-  void setContext(Subsystem *context) { context_ = context; }
+  void setContext(core::foundation::Context *context) { context_ = context; }
 
-  Subsystem *getContext() { return context_; }
+  core::foundation::Context *getContext() { return context_; }
 
-  /*!
-   * \brief
-   *    Получает подсистему.
+  /**
+   * @brief Получает подсистему.
+   *
    */
   template <class OBJ>
-  OBJ *getSubsystem() const {
-    return static_cast<OBJ *>(context_->getObject(OBJ::getObjectMetadata()->getClassName()));
+  std::optional<std::shared_ptr<OBJ>> getSubsystem() const {
+    return context_->getSubsystem<OBJ>(OBJ::getObjectClassMetadata()->getClassname());
   }
 
 private:
-  Subsystem *context_; /*!< Контекст. */
+  core::foundation::Context *context_; /*!< Контекст. */
 };
 
 NAMESPACE_END(fsm)

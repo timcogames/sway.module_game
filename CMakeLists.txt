@@ -16,7 +16,7 @@ set(META_GAME_VERSION ${META_GAME_VERSION_MAJOR}.${META_GAME_VERSION_MINOR}.${ME
 option(MODULE_GAME_SHARED_LIB "Build shared library" OFF)
 option(MODULE_GAME_ENABLE_COVERAGE "Enable coverage builds" OFF)
 option(MODULE_GAME_ENABLE_TESTS "Enable test builds" OFF)
-option(CUSTOM_BOOST_ROOT_DIR "Boost root directory" OFF)
+option(MODULE_GAME_ENABLE_EXAMPLES "Enable example builds" OFF)
 
 project(${META_GAME_PRJNAME} VERSION ${META_GAME_VERSION} LANGUAGES CXX)
 
@@ -57,19 +57,24 @@ include_directories("${MODULE_GAME_DIR}/submodules/sway.module_graphics/submodul
 include_directories("${MODULE_GAME_DIR}/submodules/sway.module_platform-glx11/lib/include")
 include_directories("${MODULE_GAME_DIR}/submodules/sway.module_ois-x11/lib/include")
 
+find_package(OpenGL REQUIRED)
+find_library(GLUT_glut_LIBRARY GLUT DOC "GLUT library for OSX")
+
+link_directories("${SYSTEM_X11_LIBRARY_DIRS}")
+
 # Получаем пути ко всем хедерам и исходникам библиотеки
 file(GLOB_RECURSE MODULE_GAME_HEADERS "${MODULE_GAME_DIR}/include/*.*")
-file(GLOB_RECURSE MODULE_GAME_SOURCE "${MODULE_GAME_DIR}/src/*.*")
+file(GLOB_RECURSE MODULE_GAME_SOURCES "${MODULE_GAME_DIR}/src/*.*")
 
 if(MODULE_GAME_SHARED_LIB)
   # Добавляем в проект цель для сборки динамической библиотеки
-  add_library(${META_GAME_LIBNAME} SHARED ${MODULE_GAME_SOURCE})
+  add_library(${META_GAME_LIBNAME} SHARED ${MODULE_GAME_SOURCES})
   set_target_properties(${META_GAME_LIBNAME} PROPERTIES OUTPUT_NAME ${META_GAME_PRJNAME})
   set_target_properties(${META_GAME_LIBNAME} PROPERTIES PREFIX "")
   set_target_properties(${META_GAME_LIBNAME} PROPERTIES SUFFIX ".so.${META_GAME_VERSION}")
 else()
   # Добавляем в проект цель для сборки статической библиотеки
-  add_library(${META_GAME_LIBNAME} STATIC ${MODULE_GAME_SOURCE})
+  add_library(${META_GAME_LIBNAME} STATIC ${MODULE_GAME_SOURCES})
   set_target_properties(${META_GAME_LIBNAME} PROPERTIES OUTPUT_NAME ${META_GAME_PRJNAME})
   set_target_properties(${META_GAME_LIBNAME} PROPERTIES PREFIX "")
   set_target_properties(${META_GAME_LIBNAME} PROPERTIES SUFFIX ".a.${META_GAME_VERSION}")
@@ -79,6 +84,21 @@ custom_enable_cxx17(${META_GAME_LIBNAME})
 target_link_libraries(${META_GAME_LIBNAME} GL X11)
 
 # Добавляем построение тестов
-if(ENABLE_TESTS)
+if(MODULE_GAME_ENABLE_TESTS)
   message(STATUS "Tests have been enabled")
 endif()
+
+# Добавляем построение примеров
+if (MODULE_GAME_ENABLE_EXAMPLES)
+  message(STATUS "Examples have been enabled")
+
+  if (NOT TARGET module_platform_glx11)
+    add_subdirectory("submodules/sway.module_platform-glx11")
+  endif ()
+
+  if (NOT TARGET module_graphics)
+    add_subdirectory("submodules/sway.module_graphics")
+  endif ()
+
+  add_subdirectory("examples/demo")
+endif ()

@@ -9,7 +9,7 @@
 
 #include <sway/glx11.hpp>
 #include <sway/graphics.hpp>
-#include <sway/ois.hpp>
+// #include <sway/ois.hpp>
 
 #include <memory>  // std::shared_ptr, std::make_shared
 #include <vector>  // std::vector

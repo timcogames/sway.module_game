@@ -10,45 +10,41 @@ NAMESPACE_BEGIN(fsm)
 
 class StateManager {
 public:
-  /*!
-   * \brief
-   *    Конструктор класса.
+  /**
+   * @brief Конструктор класса.
+   *        Выполняет инициализацию нового экземпляра класса.
    *
-   *    Выполняет инициализацию нового экземпляра класса.
    */
   StateManager();
 
-  /*!
-   * \brief
-   *    Деструктор класса.
+  /**
+   * @brief Деструктор класса.
+   *
    */
   ~StateManager();
 
-  /*!
-   * \brief
-   *    Вызывается ПЕРЕД отрисовкой кадра.
+  /**
+   * @brief Вызывается ПЕРЕД отрисовкой кадра.
+   *
    */
   void frameStarted(float timeStep);
 
-  /*!
-   * \brief
-   *    Вызывается ПОСЛЕ отрисовки кадра.
+  /**
+   * @brief Вызывается ПОСЛЕ отрисовки кадра.
+   *
    */
   void frameEnded();
 
-  /*!
-   * \brief
-   *    Изменяет текущее состояние на новое.
+  /**
+   * @brief Изменяет текущее состояние на новое.
    *
-   * \param[in] state
-   *    Указатель на новое состояние.
+   * @param[in] state Указатель на новое состояние.
+   * @param[in] context Указатель на контекст.
    *
-   * \param[in] context
-   *    Указатель на контекст.
    */
-  void changeState(AStateBase *state, Subsystem *context);
+  void changeState(AStateBase *state, core::foundation::Context *context);
 
-  void pushState(AStateBase *state, Subsystem *context);
+  void pushState(AStateBase *state, core::foundation::Context *context);
 
   void popState();
 

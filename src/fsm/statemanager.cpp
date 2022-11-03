@@ -19,7 +19,7 @@ void StateManager::frameStarted(float timeStep) { stateStack_.back()->frameStart
 
 void StateManager::frameEnded() { stateStack_.back()->frameEnded(); }
 
-void StateManager::changeState(AStateBase *state, Subsystem *context) {
+void StateManager::changeState(AStateBase *state, core::foundation::Context *context) {
   while (!stateStack_.empty()) {
     stateStack_.back()->exit();
     stateStack_.pop_back();
@@ -30,7 +30,7 @@ void StateManager::changeState(AStateBase *state, Subsystem *context) {
   stateStack_.back()->enter();
 }
 
-void StateManager::pushState(AStateBase *state, Subsystem *context) {
+void StateManager::pushState(AStateBase *state, core::foundation::Context *context) {
   if (!stateStack_.empty()) {
     stateStack_.back()->pause();
   }

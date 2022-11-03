@@ -1,8 +1,7 @@
 #ifndef SWAY_GAME_FRAMEWORK_HPP
 #define SWAY_GAME_FRAMEWORK_HPP
 
-#include "subsystem.hpp"
-
+#include <sway/core/foundation/context.hpp>
 #include <sway/game/fsm/statebase.hpp>
 #include <sway/game/fsm/statemanager.hpp>
 #include <sway/game/prereqs.hpp>
@@ -10,19 +9,18 @@
 NAMESPACE_BEGIN(sway)
 NAMESPACE_BEGIN(game)
 
-class Framework : public Subsystem {
+class Framework : public core::foundation::Context {
 public:
-  /*!
-   * \brief
-   *    Конструктор класса.
+  /**
+   * @brief Конструктор класса.
+   *        Выполняет инициализацию нового экземпляра класса.
    *
-   *    Выполняет инициализацию нового экземпляра класса.
    */
   Framework();
 
-  /*!
-   * \brief
-   *    Деструктор класса.
+  /**
+   * @brief Деструктор класса.
+   *
    */
   ~Framework() = default;
 
@@ -34,19 +32,18 @@ public:
 
   glx11::CanvasRef_t getCanvas();
 
-  ois::InputDeviceManagerRef_t getInput();
+  // ois::InputDeviceManagerRef_t getInput();
 
 private:
   void initializeCanvas_(/*const boost::property_tree::ptree &config*/);
 
   void initializeRenderSubsystem_(/*const boost::property_tree::ptree &config*/);
 
-private:
   glx11::XScreenConnectionRef_t connection_;
   glx11::CanvasRef_t canvas_;
   graphics::RenderSubsystemRef_t renderSubsystem_;
   graphics::RenderQueueRef_t renderQueue_;
-  ois::InputDeviceManagerRef_t inputMgr_;
+  // ois::InputDeviceManagerRef_t inputMgr_;
   std::shared_ptr<fsm::StateManager> stateMgr_;
 
   bool keepgoing_;
