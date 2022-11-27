@@ -30,7 +30,7 @@ public:
 
   void run();
 
-  glx11::CanvasRef_t getCanvas();
+  auto getCanvas() -> glx11::CanvasRef_t;
 
   // ois::InputDeviceManagerRef_t getInput();
 

@@ -50,14 +50,14 @@ public:
    */
   void setContext(core::foundation::Context *context) { context_ = context; }
 
-  core::foundation::Context *getContext() { return context_; }
+  auto getContext() -> core::foundation::Context * { return context_; }
 
   /**
    * @brief Получает подсистему.
    *
    */
   template <class OBJ>
-  std::optional<std::shared_ptr<OBJ>> getSubsystem() const {
+  auto getSubsystem() const -> std::optional<std::shared_ptr<OBJ>> {
     return context_->getSubsystem<OBJ>(OBJ::getObjectClassMetadata()->getClassname());
   }
 
