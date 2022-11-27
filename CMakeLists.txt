@@ -49,7 +49,7 @@ set(MODULE_GAME_DIR ${CMAKE_CURRENT_LIST_DIR})
 
 # Добавляем пути для поиска хедеров
 include_directories("${SYSTEM_X11_INCLUDE_DIRS}")
-include_directories("${MODULE_GAME_DIR}/include")
+include_directories("${MODULE_GAME_DIR}/lib/include")
 include_directories("${MODULE_GAME_DIR}/submodules/sway.module_core/lib/include")
 include_directories("${MODULE_GAME_DIR}/submodules/sway.module_math/lib/include")
 include_directories("${MODULE_GAME_DIR}/submodules/sway.module_graphics/lib/include")
@@ -63,8 +63,8 @@ find_library(GLUT_glut_LIBRARY GLUT DOC "GLUT library for OSX")
 link_directories("${SYSTEM_X11_LIBRARY_DIRS}")
 
 # Получаем пути ко всем хедерам и исходникам библиотеки
-file(GLOB_RECURSE MODULE_GAME_HEADERS "${MODULE_GAME_DIR}/include/*.*")
-file(GLOB_RECURSE MODULE_GAME_SOURCES "${MODULE_GAME_DIR}/src/*.*")
+file(GLOB_RECURSE MODULE_GAME_HEADERS "${MODULE_GAME_DIR}/lib/include/*.*")
+file(GLOB_RECURSE MODULE_GAME_SOURCES "${MODULE_GAME_DIR}/lib/src/*.*")
 
 if(MODULE_GAME_SHARED_LIB)
   # Добавляем в проект цель для сборки динамической библиотеки
