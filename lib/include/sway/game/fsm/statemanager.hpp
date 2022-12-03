@@ -13,34 +13,28 @@ public:
   /**
    * @brief Конструктор класса.
    *        Выполняет инициализацию нового экземпляра класса.
-   *
    */
   StateManager();
 
   /**
    * @brief Деструктор класса.
-   *
    */
   ~StateManager();
 
   /**
    * @brief Вызывается ПЕРЕД отрисовкой кадра.
-   *
    */
   void frameStarted(float timeStep);
 
   /**
    * @brief Вызывается ПОСЛЕ отрисовки кадра.
-   *
    */
   void frameEnded();
 
   /**
    * @brief Изменяет текущее состояние на новое.
-   *
    * @param[in] state Указатель на новое состояние.
    * @param[in] context Указатель на контекст.
-   *
    */
   void changeState(AStateBase *state, core::foundation::Context *context);
 

@@ -12,25 +12,21 @@ class AStateBase {
 public:
   /**
    * @brief Конструктор класса.
-   *
    */
   AStateBase() = default;
 
   /**
    * @brief Деструктор класса.
-   *
    */
   virtual ~AStateBase() = default;
 
   /**
    * @brief Выполняться при входе в состояние.
-   *
    */
   PURE_VIRTUAL(void enter());
 
   /**
    * @brief Выполняться при выходе из состояния.
-   *
    */
   PURE_VIRTUAL(void exit());
 
@@ -44,9 +40,7 @@ public:
 
   /**
    * @brief Устанавливает контекст.
-   *
    * @param[in] context Указатель на контекст.
-   *
    */
   void setContext(core::foundation::Context *context) { context_ = context; }
 
@@ -54,7 +48,6 @@ public:
 
   /**
    * @brief Получает подсистему.
-   *
    */
   template <class OBJ>
   auto getSubsystem() const -> std::optional<std::shared_ptr<OBJ>> {
@@ -62,7 +55,7 @@ public:
   }
 
 private:
-  core::foundation::Context *context_; /*!< Контекст. */
+  core::foundation::Context *context_;  // Контекст.
 };
 
 NAMESPACE_END(fsm)

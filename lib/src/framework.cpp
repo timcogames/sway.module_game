@@ -65,8 +65,6 @@ void Framework::initializeRenderSubsystem_(/*const boost::property_tree::ptree &
   registerSubsystem(renderSubsystem_);
 }
 
-glx11::CanvasRef_t Framework::getCanvas() { return canvas_; }
-
 // ois::InputDeviceManagerRef_t Framework::getInput() { return inputMgr_; }
 
 NAMESPACE_END(game)

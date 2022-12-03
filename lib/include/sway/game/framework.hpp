@@ -14,13 +14,11 @@ public:
   /**
    * @brief Конструктор класса.
    *        Выполняет инициализацию нового экземпляра класса.
-   *
    */
   Framework();
 
   /**
    * @brief Деструктор класса.
-   *
    */
   ~Framework() = default;
 
@@ -30,7 +28,7 @@ public:
 
   void run();
 
-  auto getCanvas() -> glx11::CanvasRef_t;
+  auto getCanvas() -> glx11::CanvasRef_t { return canvas_; }
 
   // ois::InputDeviceManagerRef_t getInput();
 
