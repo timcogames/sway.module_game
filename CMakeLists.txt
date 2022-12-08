@@ -23,7 +23,6 @@ project(${META_GAME_PRJNAME} VERSION ${META_GAME_VERSION} LANGUAGES CXX)
 # Подмодули
 custom_add_subdirectory("libmodule_core" submodules/sway.module_core)
 
-set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
 if(ENABLE_COVERAGE)
@@ -94,6 +93,10 @@ if (MODULE_GAME_ENABLE_EXAMPLES)
 
   if (NOT TARGET module_platform_glx11)
     add_subdirectory("submodules/sway.module_platform-glx11")
+  endif ()
+
+  if (NOT TARGET module_ois_x11)
+    add_subdirectory("submodules/sway.module_ois-x11")
   endif ()
 
   if (NOT TARGET module_graphics)

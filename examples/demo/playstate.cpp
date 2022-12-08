@@ -5,7 +5,7 @@
 
 #include <stdio.h>
 
-PlayState PlayState::_instance;
+PlayState PlayState::instance_;
 
 void PlayState::enter() {
   printf("PlayState::enter\n");
@@ -23,7 +23,7 @@ void PlayState::enter() {
   auto renderSubqueue = renderQueue->getSubqueues(graphics::RenderSubqueueGroup_t::kOpaque)[0];
 
   gapi::ShaderCreateInfoSet shaderCreateInfoSet;
-  shaderCreateInfoSet.vs.type = gapi::ShaderType_t::kVertex;
+  shaderCreateInfoSet.vs.type = gapi::ShaderType_t::Vertex;
   shaderCreateInfoSet.vs.code = "attribute vec3 attr_position;"
                                 "attribute vec4 attr_color;"
                                 "varying vec4 color;"
@@ -31,13 +31,14 @@ void PlayState::enter() {
                                 "	gl_Position = vec4(attr_position, 1.0);"
                                 "	color = attr_color;"
                                 "}";
-  shaderCreateInfoSet.fs.type = gapi::ShaderType_t::kFragment;
+  shaderCreateInfoSet.fs.type = gapi::ShaderType_t::Fragment;
   shaderCreateInfoSet.fs.code = "varying vec4 color;"
                                 "void main() {"
                                 "	gl_FragColor = color;"
                                 "}";
-  _material = std::make_shared<graphics::Material>(shaderCreateInfoSet);
-  _staticMesh = std::make_shared<graphics::StaticMesh>(renderSubqueue, _material);
+  material_ = std::make_shared<graphics::Material>(shaderCreateInfoSet);
+  staticMesh_ = std::make_shared<graphics::StaticMesh>(
+      renderSubqueue, std::make_shared<graphics::primitives::Quad>(1.0, 1.0), material_);
 }
 
 void PlayState::exit() { printf("PlayState::exit\n"); }

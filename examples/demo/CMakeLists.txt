@@ -4,7 +4,6 @@ set(META_GAME_EXAMPLE_EXENAME "exe${META_GAME_EXAMPLE_PRJNAME}")
 
 project(${META_GAME_EXAMPLE_PRJNAME} CXX)
 
-set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_LINK_EXECUTABLE "${CMAKE_CXX_LINK_EXECUTABLE} -ldl")
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
@@ -15,4 +14,4 @@ file(GLOB MODULE_GAME_EXAMPLE_SOURCE ${PROJECT_SOURCE_DIR}/*.cpp)
 
 add_executable(${META_GAME_EXAMPLE_EXENAME} ${MODULE_GAME_EXAMPLE_SOURCE})
 
-target_link_libraries(${META_GAME_EXAMPLE_EXENAME} libmodule_game libmodule_graphics libmodule_platform_glx11 libmodule_core)
+target_link_libraries(${META_GAME_EXAMPLE_EXENAME} libmodule_game libmodule_graphics libmodule_platform_glx11 libmodule_ois_x11 libmodule_core)

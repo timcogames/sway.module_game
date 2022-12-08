@@ -5,6 +5,7 @@
 #include <sway/game/fsm/statebase.hpp>
 #include <sway/game/fsm/statemanager.hpp>
 #include <sway/game/prereqs.hpp>
+#include <sway/ois.hpp>
 
 NAMESPACE_BEGIN(sway)
 NAMESPACE_BEGIN(game)
@@ -30,7 +31,7 @@ public:
 
   auto getCanvas() -> glx11::CanvasRef_t { return canvas_; }
 
-  // ois::InputDeviceManagerRef_t getInput();
+  auto getInput() -> ois::InputDeviceManagerRef_t { return inputMgr_; }
 
 private:
   void initializeCanvas_(/*const boost::property_tree::ptree &config*/);
@@ -41,7 +42,7 @@ private:
   glx11::CanvasRef_t canvas_;
   graphics::RenderSubsystemRef_t renderSubsystem_;
   graphics::RenderQueueRef_t renderQueue_;
-  // ois::InputDeviceManagerRef_t inputMgr_;
+  ois::InputDeviceManagerRef_t inputMgr_;
   std::shared_ptr<fsm::StateManager> stateMgr_;
 
   bool keepgoing_;

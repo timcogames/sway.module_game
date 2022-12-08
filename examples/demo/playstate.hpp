@@ -10,8 +10,8 @@ using namespace sway;
 
 class PlayState : public game::fsm::AStateBase /*, public ois::InputListener*/ {
 public:
-  static PlayState _instance;
-  static PlayState *getInstance() { return &_instance; }
+  static PlayState instance_;
+  static PlayState *getInstance() { return &instance_; }
 
   PlayState() = default;
 
@@ -40,8 +40,8 @@ public:
   // virtual void onMouseMove(const ois::MouseEventArgs &event) override;
 
 private:
-  graphics::MaterialRef_t _material;
-  graphics::StaticMeshRef_t _staticMesh;
+  graphics::MaterialRef_t material_;
+  graphics::StaticMeshRef_t staticMesh_;
 };
 
 #endif  // PLAYSTATE_HPP

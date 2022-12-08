@@ -40,6 +40,7 @@ public:
 
   /**
    * @brief Устанавливает контекст.
+   *
    * @param[in] context Указатель на контекст.
    */
   void setContext(core::foundation::Context *context) { context_ = context; }

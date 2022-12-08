@@ -11,7 +11,7 @@ Framework::Framework()
   initializeCanvas_(/*settings->getChild("Window")*/);
   initializeRenderSubsystem_(/*settings->getChild("Gapi")*/);
 
-  // inputMgr_ = std::make_shared<ois::InputDeviceManager>(connection_->getDisplay(), canvas_->getWindowHandle());
+  inputMgr_ = std::make_shared<ois::InputDeviceManager>(connection_->getDisplay(), canvas_->getWindowHandle());
   stateMgr_ = std::make_shared<fsm::StateManager>();
 }
 
@@ -59,13 +59,11 @@ void Framework::initializeRenderSubsystem_(/*const boost::property_tree::ptree &
   renderSubsystem_ = std::make_shared<graphics::RenderSubsystem>(
       "/Users/apriori85/Documents/Projects/sway.module_game/bin/module_gapi_gl.dylib.0.16.34", this);
   renderQueue_ = renderSubsystem_->createQueue();
-  renderQueue_->setPriority(core::intrusive::kPriority_Normal);
+  renderQueue_->setPriority(core::intrusive::Priority_Normal);
   renderQueue_->addSubqueue(std::make_shared<graphics::RenderSubqueue>(graphics::RenderSubqueueGroup_t::kOpaque));
 
   registerSubsystem(renderSubsystem_);
 }
-
-// ois::InputDeviceManagerRef_t Framework::getInput() { return inputMgr_; }
 
 NAMESPACE_END(game)
 NAMESPACE_END(sway)
