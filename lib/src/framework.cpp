@@ -15,7 +15,7 @@ Framework::Framework()
   stateMgr_ = std::make_shared<fsm::StateManager>();
 }
 
-void Framework::startup(fsm::AStateBase *state) { stateMgr_->changeState(state, this); }
+void Framework::startup(fsm::StateBase *state) { stateMgr_->changeState(state, this); }
 
 void Framework::terminate() { keepgoing_ = false; }
 

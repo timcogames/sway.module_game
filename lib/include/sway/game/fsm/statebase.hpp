@@ -8,17 +8,11 @@ NAMESPACE_BEGIN(sway)
 NAMESPACE_BEGIN(game)
 NAMESPACE_BEGIN(fsm)
 
-class AStateBase {
+class StateBase {
 public:
-  /**
-   * @brief Конструктор класса.
-   */
-  AStateBase() = default;
+  StateBase() = default;
 
-  /**
-   * @brief Деструктор класса.
-   */
-  virtual ~AStateBase() = default;
+  virtual ~StateBase() = default;
 
   /**
    * @brief Выполняться при входе в состояние.

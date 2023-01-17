@@ -18,12 +18,9 @@ public:
    */
   Framework();
 
-  /**
-   * @brief Деструктор класса.
-   */
   ~Framework() = default;
 
-  void startup(fsm::AStateBase *state);
+  void startup(fsm::StateBase *state);
 
   void terminate();
 

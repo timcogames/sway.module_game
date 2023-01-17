@@ -8,7 +8,7 @@
 
 using namespace sway;
 
-class PlayState : public game::fsm::AStateBase /*, public ois::InputListener*/ {
+class PlayState : public game::fsm::StateBase /*, public ois::InputListener*/ {
 public:
   static PlayState instance_;
   static PlayState *getInstance() { return &instance_; }

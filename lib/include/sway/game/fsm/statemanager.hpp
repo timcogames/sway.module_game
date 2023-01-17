@@ -37,14 +37,14 @@ public:
    * @param[in] state Указатель на новое состояние.
    * @param[in] context Указатель на контекст.
    */
-  void changeState(AStateBase *state, core::foundation::Context *context);
+  void changeState(StateBase *state, core::foundation::Context *context);
 
-  void pushState(AStateBase *state, core::foundation::Context *context);
+  void pushState(StateBase *state, core::foundation::Context *context);
 
   void popState();
 
 private:
-  std::vector<AStateBase *> stateStack_;
+  std::vector<StateBase *> stateStack_;
 };
 
 NAMESPACE_END(fsm)
